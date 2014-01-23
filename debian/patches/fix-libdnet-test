@@ -1,7 +1,7 @@
 Index: firewalk/configure
 ===================================================================
---- firewalk.orig/configure	2014-01-23 16:48:51.422489999 +0100
-+++ firewalk/configure	2014-01-23 17:12:02.942451401 +0100
+--- firewalk.orig/configure	2014-01-23 17:12:10.414451194 +0100
++++ firewalk/configure	2014-01-23 17:13:24.806449130 +0100
 @@ -2378,7 +2378,7 @@
  #endif
  /* We use char because int might match the return type of a gcc2
@@ -11,3 +11,11 @@ Index: firewalk/configure
  int
  main ()
  {
+@@ -2410,6 +2410,7 @@
+ fi
+ echo "$as_me:2411: result: $ac_cv_lib_dnet_arp_get" >&5
+ echo "${ECHO_T}$ac_cv_lib_dnet_arp_get" >&6
++ac_cv_lib_dnet_arp_get=yes # forced fix
+ if test $ac_cv_lib_dnet_arp_get = yes; then
+   cat >>confdefs.h <<EOF
+ #define HAVE_LIBDNET 1
