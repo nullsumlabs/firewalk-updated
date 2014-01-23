@@ -1,5 +1,5 @@
-firewalk (5.0-1) unstable; urgency=low
+firewalk (5.0-1) kali; urgency=low
 
-  * Initial release (Closes: #nnnn)  <nnnn is the bug number of your ITP>
+  * Initial release 
 
- -- root <Emanuele Acri <crossbower@kali.org>>  Thu, 23 Jan 2014 16:49:16 +0100
+ -- Emanuele Acri <crossbower@kali.org>  Thu, 23 Jan 2014 16:49:16 +0100
