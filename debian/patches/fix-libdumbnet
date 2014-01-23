@@ -1,7 +1,7 @@
 Index: firewalk/configure
 ===================================================================
---- firewalk.orig/configure	2014-01-23 17:22:50.502433439 +0100
-+++ firewalk/configure	2014-01-23 17:25:21.550429249 +0100
+--- firewalk.orig/configure	2014-01-23 17:25:27.334429089 +0100
++++ firewalk/configure	2014-01-23 17:26:18.142427680 +0100
 @@ -2410,6 +2410,7 @@
  fi
  echo "$as_me:2411: result: $ac_cv_lib_dnet_arp_get" >&5
@@ -10,3 +10,16 @@ Index: firewalk/configure
  if test $ac_cv_lib_dnet_arp_get = yes; then
    cat >>confdefs.h <<EOF
  #define HAVE_LIBDNET 1
+Index: firewalk/include/firewalk.h
+===================================================================
+--- firewalk.orig/include/firewalk.h	2014-01-23 17:22:49.246433474 +0100
++++ firewalk/include/firewalk.h	2014-01-23 17:26:35.830427189 +0100
+@@ -38,7 +38,7 @@
+ #include <setjmp.h>
+ #include <ctype.h>
+ #include <pcap.h>
+-#include <dnet.h>
++#include <dumbnet.h>
+ #include <libnet.h>
+ 
+ #define FW_BANNER  "Firewalk (c) 2002 Mike D. Schiffman \
