@@ -1,7 +1,7 @@
 Index: firewalk/configure
 ===================================================================
---- firewalk.orig/configure	2014-01-23 17:25:27.334429089 +0100
-+++ firewalk/configure	2014-01-23 17:26:18.142427680 +0100
+--- firewalk.orig/configure	2014-01-23 17:26:41.646427028 +0100
++++ firewalk/configure	2014-01-23 17:27:17.530426032 +0100
 @@ -2410,6 +2410,7 @@
  fi
  echo "$as_me:2411: result: $ac_cv_lib_dnet_arp_get" >&5
@@ -12,8 +12,8 @@ Index: firewalk/configure
  #define HAVE_LIBDNET 1
 Index: firewalk/include/firewalk.h
 ===================================================================
---- firewalk.orig/include/firewalk.h	2014-01-23 17:22:49.246433474 +0100
-+++ firewalk/include/firewalk.h	2014-01-23 17:26:35.830427189 +0100
+--- firewalk.orig/include/firewalk.h	2014-01-23 17:26:41.646427028 +0100
++++ firewalk/include/firewalk.h	2014-01-23 17:27:17.530426032 +0100
 @@ -38,7 +38,7 @@
  #include <setjmp.h>
  #include <ctype.h>
@@ -23,3 +23,16 @@ Index: firewalk/include/firewalk.h
  #include <libnet.h>
  
  #define FW_BANNER  "Firewalk (c) 2002 Mike D. Schiffman \
+Index: firewalk/src/firewalk.c
+===================================================================
+--- firewalk.orig/src/firewalk.c	2014-01-23 16:48:51.426489999 +0100
++++ firewalk/src/firewalk.c	2014-01-23 17:28:31.090423992 +0100
+@@ -188,7 +188,7 @@
+                     case FW_SERIOUS_ERROR:
+                         /* err msg set in fw_packet_capture() */
+                         return (FW_SERIOUS_ERROR);
+-                    default:
++                    /*default:
+                         /* empty */
+                 }
+             }
