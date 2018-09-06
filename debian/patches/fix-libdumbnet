@@ -1,65 +1,8 @@
-Index: firewalk/configure
-===================================================================
---- firewalk.orig/configure	2014-01-23 17:28:36.266423848 +0100
-+++ firewalk/configure	2014-01-23 17:32:14.458417796 +0100
-@@ -2361,13 +2361,13 @@
-    { (exit 1); exit 1; }; }
- fi
- 
--echo "$as_me:2364: checking for arp_get in -ldnet" >&5
--echo $ECHO_N "checking for arp_get in -ldnet... $ECHO_C" >&6
--if test "${ac_cv_lib_dnet_arp_get+set}" = set; then
-+echo "$as_me:2364: checking for arp_get in -ldumbnet" >&5
-+echo $ECHO_N "checking for arp_get in -ldumbnet... $ECHO_C" >&6
-+if test "${ac_cv_lib_dumbnet_arp_get+set}" = set; then
-   echo $ECHO_N "(cached) $ECHO_C" >&6
- else
-   ac_check_lib_save_LIBS=$LIBS
--LIBS="-ldnet  $LIBS"
-+LIBS="-ldumbnet  $LIBS"
- cat >conftest.$ac_ext <<_ACEOF
- #line 2372 "configure"
- #include "confdefs.h"
-@@ -2399,27 +2399,27 @@
-   ac_status=$?
-   echo "$as_me:2400: \$? = $ac_status" >&5
-   (exit $ac_status); }; }; then
--  ac_cv_lib_dnet_arp_get=yes
-+  ac_cv_lib_dumbnet_arp_get=yes
- else
-   echo "$as_me: failed program was:" >&5
- cat conftest.$ac_ext >&5
--ac_cv_lib_dnet_arp_get=no
-+ac_cv_lib_dumbnet_arp_get=no
- fi
- rm -f conftest.$ac_objext conftest$ac_exeext conftest.$ac_ext
- LIBS=$ac_check_lib_save_LIBS
- fi
--echo "$as_me:2411: result: $ac_cv_lib_dnet_arp_get" >&5
--echo "${ECHO_T}$ac_cv_lib_dnet_arp_get" >&6
--if test $ac_cv_lib_dnet_arp_get = yes; then
-+echo "$as_me:2411: result: $ac_cv_lib_dumbnet_arp_get" >&5
-+echo "${ECHO_T}$ac_cv_lib_dumbnet_arp_get" >&6
-+if test $ac_cv_lib_dumbnet_arp_get = yes; then
-   cat >>confdefs.h <<EOF
- #define HAVE_LIBDNET 1
- EOF
- 
--  LIBS="-ldnet $LIBS"
-+  LIBS="-ldumbnet $LIBS"
- 
- else
--  { { echo "$as_me:2421: error: No libdnet?  http://libdnet.sourceforge.net." >&5
--echo "$as_me: error: No libdnet?  http://libdnet.sourceforge.net." >&2;}
-+  { { echo "$as_me:2421: error: No libdumbnet?  http://libdnet.sourceforge.net." >&5
-+echo "$as_me: error: No libdumbnet?  http://libdnet.sourceforge.net." >&2;}
-    { (exit 1); exit 1; }; }
- fi
- 
-Index: firewalk/include/firewalk.h
-===================================================================
---- firewalk.orig/include/firewalk.h	2014-01-23 17:28:36.266423848 +0100
-+++ firewalk/include/firewalk.h	2014-01-23 17:29:27.526422427 +0100
+Description: Use libdumbnet instead of libdnet
+Author: Emanuele Acri <crossbower@kali.org>
+
+--- a/include/firewalk.h
++++ b/include/firewalk.h
 @@ -38,7 +38,7 @@
  #include <setjmp.h>
  #include <ctype.h>
@@ -69,11 +12,9 @@ Index: firewalk/include/firewalk.h
  #include <libnet.h>
  
  #define FW_BANNER  "Firewalk (c) 2002 Mike D. Schiffman \
-Index: firewalk/src/firewalk.c
-===================================================================
---- firewalk.orig/src/firewalk.c	2014-01-23 17:28:36.266423848 +0100
-+++ firewalk/src/firewalk.c	2014-01-23 17:29:27.526422427 +0100
-@@ -188,7 +188,7 @@
+--- a/src/firewalk.c
++++ b/src/firewalk.c
+@@ -188,7 +188,7 @@ firewalk(struct firepack **fp)
                      case FW_SERIOUS_ERROR:
                          /* err msg set in fw_packet_capture() */
                          return (FW_SERIOUS_ERROR);
@@ -82,3 +23,14 @@ Index: firewalk/src/firewalk.c
                          /* empty */
                  }
              }
+--- a/configure.in
++++ b/configure.in
+@@ -61,7 +61,7 @@ dnl Checks for libraries.
+ dnl
+ AC_CHECK_LIB(net, libnet_build_ipv4, , AC_MSG_ERROR(We need libnet 1.1.0 or better.  http://www.packetfactory.net))
+ AC_CHECK_LIB(pcap, pcap_open_live, , AC_MSG_ERROR(No libpcap?  http://www.tcpdump.org.))
+-AC_CHECK_LIB(dnet, arp_get, , AC_MSG_ERROR(No libdnet?  http://libdnet.sourceforge.net.))
++AC_CHECK_LIB(dumbnet, arp_get, , AC_MSG_ERROR(No libdumbnet?  http://libdnet.sourceforge.net.))
+ 
+ dnl
+ dnl Checks for header files.
