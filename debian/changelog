@@ -1,3 +1,10 @@
+firewalk (5.0-1kali1) kali-dev; urgency=medium
+
+  * Multiple packaging cleanups.
+  * Use a version containing kali to clearly identify the origin.
+
+ -- Raphaël Hertzog <hertzog@debian.org>  Thu, 06 Sep 2018 15:51:16 +0200
+
 firewalk (5.0-1) kali; urgency=low
 
   * Initial release 
