@@ -1,15 +1,19 @@
 Source: firewalk
 Section: net
-Priority: extra
-Maintainer: Emanuele Acri <crossbower@kali.org>
-Build-Depends: debhelper (>= 8.0.0), autotools-dev, libnet1-dev, libpcap-dev, libdumbnet-dev
-Standards-Version: 3.9.3
+Priority: optional
+Maintainer: Kali Developers <devel@kali.org>
+Uploaders: Emanuele Acri <crossbower@kali.org>
+Build-Depends: debhelper (>= 11), libnet1-dev, libpcap-dev, libdumbnet-dev
+Standards-Version: 4.2.1
 Homepage: http://packetfactory.openwall.net/projects/firewalk/
-#Vcs-Git: git://git.debian.org/collab-maint/firewalk.git
-#Vcs-Browser: http://git.debian.org/?p=collab-maint/firewalk.git;a=summary
+Vcs-Git: git://git.kali.org/packages/firewalk.git
+Vcs-Browser: https://git.kali.org/gitweb/?p=packages/firewalk.git;a=summary
 
 Package: firewalk
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, libnet1, libpcap0.8, libdumbnet1
-Description: Firewalk is an active reconnaissance network security tool.
- Firewalk is an active reconnaissance network security tool that attempts to determine what layer 4 protocols a  given IP forwarding device will pass. Firewalk  works  by sending out TCP or UDP packets with a TTL one greater than the targeted gateway. 
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: An active reconnaissance network security tool.
+ Firewalk is an active reconnaissance network security tool that attempts to
+ determine what layer 4 protocols a given IP forwarding device will pass.
+ Firewalk works by sending out TCP or UDP packets with a TTL one greater than
+ the targeted gateway. 
