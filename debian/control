@@ -6,8 +6,8 @@ Uploaders: Emanuele Acri <crossbower@kali.org>
 Build-Depends: debhelper (>= 11), libnet1-dev, libpcap-dev, libdumbnet-dev
 Standards-Version: 4.2.1
 Homepage: http://packetfactory.openwall.net/projects/firewalk/
-Vcs-Git: git://git.kali.org/packages/firewalk.git
-Vcs-Browser: https://git.kali.org/gitweb/?p=packages/firewalk.git;a=summary
+Vcs-Git: https://gitlab.com/kalilinux/packages/firewalk.git
+Vcs-Browser: https://gitlab.com/kalilinux/packages/firewalk
 
 Package: firewalk
 Architecture: any
