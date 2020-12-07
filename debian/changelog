@@ -1,3 +1,15 @@
+firewalk (5.0-1kali3) kali-dev; urgency=medium
+
+  [ Kali Janitor ]
+  * Set debhelper-compat version in Build-Depends.
+  * Remove deprecated Encoding key from desktop file
+    debian/kali-firewalk.desktop.
+
+  [ Sophie Brun ]
+  * Update debhelper-compat and Bump Standards-Version
+
+ -- Sophie Brun <sophie@offensive-security.com>  Mon, 07 Dec 2020 15:51:42 +0100
+
 firewalk (5.0-1kali2) kali-dev; urgency=medium
 
   * Update patch to use libdumbnet, we need to patch configure.in now.
