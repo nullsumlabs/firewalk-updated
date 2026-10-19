@@ -1,0 +1,58 @@
+name: CI
+
+# Runs on every push to master and on pull requests. Tag pushes are handled by
+# release.yml instead, so the branch filter is intentional.
+on:
+  push:
+    branches: [master]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build on Debian stable
+    runs-on: ubuntu-24.04
+    container: debian:13
+
+    steps:
+      # The official Debian image does not ship git, which checkout needs.
+      - name: Install git
+        run: |
+          apt-get update
+          apt-get install -y --no-install-recommends ca-certificates git
+
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Install build dependencies
+        run: |
+          apt-get update
+          apt-get install -y --no-install-recommends \
+            autoconf automake build-essential \
+            debhelper libdumbnet-dev libnet1-dev libpcap-dev
+
+      - name: Configure and build
+        run: |
+          autoreconf -fi
+          ./configure
+          make
+
+      - name: Run distcheck
+        run: make distcheck
+
+      - name: Build Debian package
+        run: |
+          make distclean
+          dpkg-buildpackage -us -uc -b
+          mkdir -p artifacts
+          mv ../firewalk_*.deb ../firewalk*.ddeb \
+            ../firewalk_*.buildinfo ../firewalk_*.changes artifacts/
+
+      - name: Upload package
+        uses: actions/upload-artifact@v4
+        with:
+          name: firewalk-debian
+          path: artifacts/

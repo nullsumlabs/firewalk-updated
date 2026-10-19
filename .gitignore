@@ -32,3 +32,5 @@ debian/*.debhelper.log
 debian/*.substvars
 debian/firewalk/
 debian/tmp/
+debian/autoreconf.before
+debian/autoreconf.after

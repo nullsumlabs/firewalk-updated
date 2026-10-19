@@ -1,0 +1,84 @@
+name: Release
+
+# Pushing a tag such as v5.0.1 builds the release files and publishes them as a
+# GitHub Release. Build steps mirror ci.yml on purpose, so this workflow can be
+# read and debugged on its own.
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build release files
+    runs-on: ubuntu-24.04
+    container: debian:13
+
+    steps:
+      # The official Debian image does not ship git, which checkout needs.
+      - name: Install git
+        run: |
+          apt-get update
+          apt-get install -y --no-install-recommends ca-certificates git
+
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Install build dependencies
+        run: |
+          apt-get update
+          apt-get install -y --no-install-recommends \
+            autoconf automake build-essential \
+            debhelper libdumbnet-dev libnet1-dev libpcap-dev
+
+      - name: Configure and build
+        run: |
+          autoreconf -fi
+          ./configure
+          make
+
+      - name: Run distcheck
+        run: make distcheck
+
+      - name: Collect release files
+        run: |
+          make dist
+          make distclean
+          dpkg-buildpackage -us -uc -b
+          mkdir -p artifacts
+          mv firewalk-*.tar.gz ../firewalk_*.deb ../firewalk*.ddeb \
+            ../firewalk_*.buildinfo ../firewalk_*.changes artifacts/
+          cd artifacts
+          sha256sum -- * > SHA256SUMS
+
+      - name: Upload release files
+        uses: actions/upload-artifact@v4
+        with:
+          name: firewalk-release
+          path: artifacts/
+
+  publish:
+    name: Publish GitHub Release
+    needs: build
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+
+    steps:
+      - name: Download release files
+        uses: actions/download-artifact@v4
+        with:
+          name: firewalk-release
+          path: artifacts
+
+      - name: Create release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" \
+            --title "Firewalk $GITHUB_REF_NAME" \
+            --generate-notes \
+            artifacts/*
