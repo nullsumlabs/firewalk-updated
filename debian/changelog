@@ -1,3 +1,11 @@
+firewalk (5.0-1kali4) kali-dev; urgency=medium
+
+  * Modernize autotools files for current autoconf and automake.
+  * Detect libdumbnet in configure; drop the libdumbnet patch.
+  * Install the man page from the upstream build.
+
+ -- Kali Developers <devel@kali.org>  Sun, 18 Oct 2026 00:00:00 +0200
+
 firewalk (5.0-1kali3) kali-dev; urgency=medium
 
   [ Kali Janitor ]
