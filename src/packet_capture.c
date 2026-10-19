@@ -32,10 +32,10 @@
  * SUCH DAMAGE.
  */
 
-#if (HAVE_CONFIG_H)
-#include "../include/config.h"
+#ifdef HAVE_CONFIG_H
+#include "config.h"
 #endif
-#include "../include/firewalk.h"
+#include "firewalk.h"
 
 int loop = 1;
 
@@ -47,19 +47,23 @@ fw_packet_capture(struct firepack **fp)
     struct timeval timeout;
     struct pcap_pkthdr pc_hdr;
 
-    timeout.tv_sec = (*fp)->pcap_timeout;
-    timeout.tv_usec = 0;
-
     pcap_fd = pcap_fileno((*fp)->p);
-    FD_ZERO(&read_set);
-    FD_SET(pcap_fd, &read_set);
 
     for (timed_out = 0; !timed_out && loop; )
     {
+        timeout.tv_sec = (*fp)->pcap_timeout;
+        timeout.tv_usec = 0;
+        FD_ZERO(&read_set);
+        FD_SET(pcap_fd, &read_set);
+
         c = select(pcap_fd + 1, &read_set, 0, 0, &timeout);
         switch (c)
         {
             case -1:
+                if (errno == EINTR)
+                {
+                    continue;
+                }
                 snprintf((*fp)->errbuf, FW_ERRBUF_SIZE,
                         "select() %s", strerror(errno));
                 return (-1);

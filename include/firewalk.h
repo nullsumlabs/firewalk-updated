@@ -35,10 +35,35 @@
 #ifndef _FIREWALK_H
 #define _FIREWALK_H
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
+#include <sys/types.h>
+#include <sys/time.h>
+#include <sys/socket.h>
+#include <sys/select.h>
+#include <net/if.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <strings.h>
+#include <errno.h>
+#include <unistd.h>
+#include <signal.h>
 #include <setjmp.h>
 #include <ctype.h>
+
 #include <pcap.h>
+#if defined(HAVE_DNET_H)
 #include <dnet.h>
+#elif defined(HAVE_DUMBNET_H)
+#include <dumbnet.h>
+#else
+#error "libdnet or libdumbnet headers are required"
+#endif
 #include <libnet.h>
 
 #define FW_BANNER  "Firewalk (c) 2002 Mike D. Schiffman \
@@ -109,7 +134,7 @@ struct firepack_stats
 /* main monolithic firewalk context structure */
 struct firepack
 {
-    char *device;                   /* interface */
+    const char *device;             /* interface */
     u_char *packet;                 /* packet captured from the wire */
     pcap_t *p;                      /* libpcap context */
     libnet_t *l;                    /* libnet context */
@@ -137,7 +162,7 @@ struct firepack
     libnet_ptag_t icmp;             /* icmp ptag */
     struct sockaddr_in sin;         /* socket address structure */
     struct firepack_stats stats;    /* stats */
-#define FW_ERRBUF_SIZE  0x100       /* 256 bytes */
+#define FW_ERRBUF_SIZE  0x200       /* 512 bytes */
     char errbuf[FW_ERRBUF_SIZE];    /* errors here */
 };
 
@@ -233,7 +258,7 @@ fw_report(
     );
 
 /* looks up the ICMP unreachable code of a response */
-char *                              /* unreachable code */
+const char *                        /* unreachable code */
 fw_get_unreach_code(
     struct firepack **              /* firewalk context */
     );
@@ -248,7 +273,7 @@ fw_report_stats(
 int                                 /* 1 on success -1 or failure */
 catch_sig(
     int,                            /* signal to catch */
-    void (*)()                      /* new signal handler */
+    void (*)(int)                   /* new signal handler */
     );
 
 /* handles SIGINT from user */
@@ -280,7 +305,7 @@ fw_shutdown(
 /* dump usage */
 void
 usage(
-    u_char *                        /* argv[0] */
+    char *                          /* argv[0] */
     );
 
 #endif /* _FIREWALK_H */

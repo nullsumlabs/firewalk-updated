@@ -32,11 +32,11 @@
  * SUCH DAMAGE.
  */
 
-#if (HAVE_CONFIG_H)
-#include "../include/config.h"
+#ifdef HAVE_CONFIG_H
+#include "config.h"
 #endif
 #include <stdarg.h>
-#include "../include/firewalk.h"
+#include "firewalk.h"
 
 int
 fw_str2int(register const char *str, register const char *what,

@@ -35,7 +35,7 @@
 #ifndef _FW_UNREACHABLES_H
 #define _FW_UNREACHABLES_H
 
-char *unreachables[] =
+static const char *const unreachables[] =
 {
     "ICMP_UNREACH_NET",
     "ICMP_UNREACH_HOST",

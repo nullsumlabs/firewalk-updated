@@ -32,17 +32,17 @@
  * SUCH DAMAGE.
  */
 
-#if (HAVE_CONFIG_H)
-#include "../include/config.h"
+#ifdef HAVE_CONFIG_H
+#include "config.h"
 #endif
-#include "../include/firewalk.h"
-#include "../version.h"
+#include "firewalk.h"
+#include "version.h"
 
 int
 main(int argc, char *argv[])
 {
     int c;
-    struct firepack *fp;
+    struct firepack *fp = NULL;
     char *port_list = NULL;
     char errbuf[FW_ERRBUF_SIZE];
 
@@ -171,7 +171,7 @@ done:
 }
 
 void
-usage(u_char *argv0)
+usage(char *argv0)
 {
     fprintf(stderr, "Usage : %s [options] target_gateway metric\n"
         "\t\t   [-d %d - %d] destination port to use (ramping phase)\n"

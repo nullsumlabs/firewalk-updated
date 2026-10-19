@@ -32,10 +32,10 @@
  * SUCH DAMAGE.
  */
 
-#if (HAVE_CONFIG_H)
-#include "../include/config.h"
+#ifdef HAVE_CONFIG_H
+#include "config.h"
 #endif
-#include "../include/firewalk.h"
+#include "firewalk.h"
 
 int
 fw_packet_build_probe(struct firepack **fp)
@@ -102,7 +102,6 @@ fw_packet_build_probe(struct firepack **fp)
     if (r == NULL)
     {
         snprintf((*fp)->errbuf, FW_ERRBUF_SIZE, "route_open()");
-        route_close(r);
         return (-1);
     }
 
@@ -148,7 +147,6 @@ fw_packet_build_probe(struct firepack **fp)
         snprintf((*fp)->errbuf, FW_ERRBUF_SIZE,
                 "libnet_autobuild_ethernet() %s",
                 libnet_geterror((*fp)->l));
-        arp_close(a);
         return (-1);
     }
 

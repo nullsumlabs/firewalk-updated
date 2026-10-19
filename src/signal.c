@@ -32,15 +32,15 @@
  * SUCH DAMAGE.
  */
 
-#if (HAVE_CONFIG_H)
-#include "../include/config.h"
+#ifdef HAVE_CONFIG_H
+#include "config.h"
 #endif
-#include "../include/firewalk.h"
+#include "firewalk.h"
 
 extern int loop;
 
 int
-catch_sig(int signo, void (*handler)())
+catch_sig(int signo, void (*handler)(int))
 {
     struct sigaction action;
 
@@ -61,8 +61,9 @@ catch_sig(int signo, void (*handler)())
 }
 
 void
-catch_sigint(int nil)
+catch_sigint(int signo)
 {
+    (void)signo;
     loop = 0;
 }
 

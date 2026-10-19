@@ -32,10 +32,10 @@
  * SUCH DAMAGE.
  */
 
-#if (HAVE_CONFIG_H)
-#include "../include/config.h"
+#ifdef HAVE_CONFIG_H
+#include "config.h"
 #endif
-#include "../include/firewalk.h"
+#include "firewalk.h"
 
 int
 fw_init_context(struct firepack **fp, char *errbuf)
@@ -96,7 +96,7 @@ fw_init_net(struct firepack **fp, char *gw, char *m, char *port_list)
     (*fp)->sin.sin_addr.s_addr = libnet_get_ipaddr4((*fp)->l);
 
     /* setup the target gateway */
-    if (((*fp)->gateway = libnet_name2addr4((*fp)->l, gw, 1)) == -1)
+    if (((*fp)->gateway = libnet_name2addr4((*fp)->l, gw, 1)) == (u_long)-1)
     {
         snprintf((*fp)->errbuf, FW_ERRBUF_SIZE,
                 "libnet_name2addr4(): %s (target gateway: %s)",
@@ -105,7 +105,7 @@ fw_init_net(struct firepack **fp, char *gw, char *m, char *port_list)
     }
 
     /* setup the metric */
-    if (((*fp)->metric = libnet_name2addr4((*fp)->l, m, 1)) == -1)
+    if (((*fp)->metric = libnet_name2addr4((*fp)->l, m, 1)) == (u_long)-1)
     {
         snprintf((*fp)->errbuf, FW_ERRBUF_SIZE,
                 "libnet_name2addr4(): %s (metric: %s)",
@@ -116,7 +116,7 @@ fw_init_net(struct firepack **fp, char *gw, char *m, char *port_list)
     /* sanity check */
     if ((*fp)->gateway == (*fp)->metric)
     {
-        snprintf((*fp)->errbuf, FW_ERRBUF_SIZE,
+        snprintf((*fp)->errbuf, FW_ERRBUF_SIZE, "%s",
                 "target gateway and metric cannot be the same");
         return (-1);
     }
@@ -213,7 +213,7 @@ fw_init_net(struct firepack **fp, char *gw, char *m, char *port_list)
             (*fp)->seq = libnet_get_prand(LIBNET_PRu32);
             break;
         default:
-            sprintf((*fp)->errbuf,
+            snprintf((*fp)->errbuf, FW_ERRBUF_SIZE,
                     "fw_init_network(): unsupported protocol");
             return (-1);
     }

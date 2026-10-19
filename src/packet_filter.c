@@ -32,10 +32,10 @@
  * SUCH DAMAGE.
  */
 
-#if (HAVE_CONFIG_H)
-#include "../include/config.h"
+#ifdef HAVE_CONFIG_H
+#include "config.h"
 #endif
-#include "../include/firewalk.h"
+#include "firewalk.h"
 
 int
 fw_set_pcap_filter(char *filter, struct firepack **fp)

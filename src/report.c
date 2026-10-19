@@ -32,11 +32,11 @@
  * SUCH DAMAGE.
  */
 
-#if (HAVE_CONFIG_H)
-#include "../include/config.h"
+#ifdef HAVE_CONFIG_H
+#include "config.h"
 #endif
-#include "../include/firewalk.h"
-#include "../include/unreachables.h"
+#include "firewalk.h"
+#include "unreachables.h"
 
 void
 fw_report(int class, struct firepack **fp)
@@ -120,6 +120,10 @@ fw_report(int class, struct firepack **fp)
 void
 fw_report_stats(struct firepack **fp)
 {
+    if (fp == NULL || *fp == NULL)
+    {
+        return;
+    }
     printf("\nTotal packets sent:                %ld\n"
              "Total packet errors:               %ld\n"
              "Total packets caught               %ld\n"
@@ -136,7 +140,7 @@ fw_report_stats(struct firepack **fp)
 }
 
 
-char *
+const char *
 fw_get_unreach_code(struct firepack **fp)
 {
     struct libnet_icmpv4_hdr *icmp_hdr;
