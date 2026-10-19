@@ -34,7 +34,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.69])
-AC_INIT([firewalk], [5.0], [mike@infonexus.com], [firewalk],
+AC_INIT([firewalk], [5.0.1], [mike@infonexus.com], [firewalk],
         [http://www.packetfactory.net/firewalk])
 AC_CONFIG_SRCDIR([src/main.c])
 AC_CONFIG_AUX_DIR([.])
