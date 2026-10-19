@@ -15,6 +15,15 @@ sudo make install
 
 Run `src/firewalk` as root. See `man/firewalk.8` for usage.
 
+## Changes for modern systems
+
+- Replaced `configure.in` with `configure.ac` (current autoconf, no `acconfig.h`) and regenerated the autotools files.
+- Detects `libdumbnet` on Debian/Ubuntu, falling back to `libdnet`.
+- Standard automake rules: builds `src/firewalk`, installs the binary and man page, and supports out-of-tree builds.
+- Source fixes for modern compilers and libnet: explicit system headers, const-correctness, signal handler signatures, and correct `u_long` comparisons.
+- Capture retries on `EINTR` and re-arms `select()` each loop; fixed a fallthrough from ICMP into TCP response verification.
+- Dropped the obsolete Debian `libdumbnet` patch.
+
 <br>
 <br>
 
