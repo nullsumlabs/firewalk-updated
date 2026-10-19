@@ -6,4 +6,5 @@ SUBDIRS = src
 
 dist_man_MANS = man/firewalk.8
 
-EXTRA_DIST = Makefile.am.common include/firewalk.h include/unreachables.h
+EXTRA_DIST = Makefile.am.common include/firewalk.h include/unreachables.h \
+	     README.md
