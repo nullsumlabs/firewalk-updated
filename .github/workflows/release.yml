@@ -24,7 +24,7 @@ jobs:
           apt-get install -y --no-install-recommends ca-certificates git
 
       - name: Check out source
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Install build dependencies
         run: |
@@ -44,20 +44,28 @@ jobs:
 
       - name: Collect release files
         run: |
+          mkdir -p artifacts
           make dist
+          mv firewalk-*.tar.gz artifacts/
           make distclean
           dpkg-buildpackage -us -uc -b
-          mkdir -p artifacts
-          mv firewalk-*.tar.gz ../firewalk_*.deb ../firewalk*.ddeb \
-            ../firewalk_*.buildinfo ../firewalk_*.changes artifacts/
+          # Package names vary by distribution: Debian ships the debug symbols
+          # as firewalk-dbgsym_*.deb while Ubuntu uses *.ddeb. Collect whatever
+          # dpkg-buildpackage actually produced instead of hard-coding one set.
+          find .. -maxdepth 1 -type f \
+            \( -name 'firewalk_*.deb' -o -name 'firewalk-*.deb' -o -name '*.ddeb' \
+               -o -name 'firewalk_*.buildinfo' -o -name 'firewalk_*.changes' \) \
+            -print -exec mv {} artifacts/ \;
           cd artifacts
+          ls -l
           sha256sum -- * > SHA256SUMS
 
       - name: Upload release files
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: firewalk-release
           path: artifacts/
+          if-no-files-found: error
 
   publish:
     name: Publish GitHub Release
@@ -68,7 +76,7 @@ jobs:
 
     steps:
       - name: Download release files
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: firewalk-release
           path: artifacts
