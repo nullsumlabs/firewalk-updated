@@ -4,4 +4,6 @@ include $(top_srcdir)/Makefile.am.common
 
 SUBDIRS = src
 
-EXTRA_DIST = Makefile.am.common
+dist_man_MANS = man/firewalk.8
+
+EXTRA_DIST = Makefile.am.common include/firewalk.h include/unreachables.h

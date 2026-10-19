@@ -10,7 +10,10 @@ include $(top_srcdir)/Makefile.am.common
 
 sbin_PROGRAMS = firewalk
 
-firewalk_SOURCES = 	init.c \
+AM_CPPFLAGS = -I$(top_builddir)/include -I$(top_srcdir)/include \
+	      -I$(top_builddir)
+
+firewalk_SOURCES =	init.c \
 			firewalk.c \
 			main.c \
 			packet_build.c \
@@ -23,14 +26,4 @@ firewalk_SOURCES = 	init.c \
 			signal.c \
 			util.c
 
-all:
-	cp firewalk $(top_srcdir)
-	strip $(top_srcdir)/firewalk
-
-clean:
-	rm -f $(top_srcdir)/firewalk
-
-distclean:
-	rm -f $(top_srcdir)/firewalk
-
-
+firewalk_LDADD = $(LIBNET_LIBS) $(PCAP_LIBS) $(DNET_LIBS) $(ADDITIONAL_LIBS)

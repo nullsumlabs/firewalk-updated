@@ -3,5 +3,4 @@
  *  @configure_input@
  */
 
-#define VERSION "@FIREWALK_VERSION@"
-
+#define VERSION "@PACKAGE_VERSION@"
