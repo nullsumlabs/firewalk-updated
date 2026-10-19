@@ -17,4 +17,18 @@ depcomp
 src/firewalk
 *.o
 firewalk-*.tar.gz
+firewalk-*/
 *~
+
+# Test artifacts
+*.log
+*.trs
+
+# Debian package builds
+debian/.debhelper/
+debian/debhelper-build-stamp
+debian/files
+debian/*.debhelper.log
+debian/*.substvars
+debian/firewalk/
+debian/tmp/
