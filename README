@@ -20,9 +20,14 @@
     You'll need:
     - a recent libpcap release (http://www.tcpdump.org)
     - libnet 1.1.0 or better (http://www.packetfactory.net/libnet)
+    - libdnet, packaged as libdumbnet on Debian and Ubuntu
     Build and install these.
 
     0. nroff -man man/firewalk.8 | less
     1. ./configure && make && make install
+
+    The binary is built as src/firewalk.
+    Building from git requires autoconf and automake:
+    autoreconf -fi && ./configure && make
 
 EOF

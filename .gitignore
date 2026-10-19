@@ -1,1 +1,20 @@
 .pc
+
+# Generated build files
+Makefile
+src/Makefile
+include/config.h
+include/config.h.in~
+include/stamp-h1
+version.h
+config.log
+config.status
+config.cache
+autom4te.cache/
+depcomp
+
+# Build outputs
+src/firewalk
+*.o
+firewalk-*.tar.gz
+*~
