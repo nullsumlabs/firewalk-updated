@@ -72,6 +72,7 @@ fw_packet_verify_ramp(struct firepack **fp)
                          */
                         break;
                     }
+                    /* fall through */
                 case ICMP_UNREACH:
                     /*
                      *  Point to the original IPv4 header inside the ICMP
@@ -122,6 +123,7 @@ fw_packet_verify_ramp(struct firepack **fp)
                 default:
                     break;
             }
+            break;
         case IPPROTO_TCP:
             if ((*fp)->protocol != IPPROTO_TCP)
             {
@@ -206,6 +208,7 @@ fw_packet_verify_scan(struct firepack **fp)
                          */
                         break;
                     }
+                    /* fall through */
                 case ICMP_UNREACH:
                     /*
                      *  Point to the original IPv4 header inside the ICMP
@@ -233,7 +236,8 @@ fw_packet_verify_scan(struct firepack **fp)
                     break;
                 default:
                     break;
-        }
+            }
+            break;
         case IPPROTO_TCP:
             if ((*fp)->protocol != IPPROTO_TCP)
             {
