@@ -81,11 +81,16 @@ jobs:
           name: firewalk-release
           path: artifacts
 
-      - name: Create release
+      - name: Publish release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_REPO: ${{ github.repository }}
         run: |
+          # Rebuilding a tag that already has a release should replace it, so
+          # drop the old release (keeping the tag) before creating a new one.
+          if gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
+            gh release delete "$GITHUB_REF_NAME" --yes --cleanup-tag=false
+          fi
           gh release create "$GITHUB_REF_NAME" \
             --title "Firewalk $GITHUB_REF_NAME" \
             --generate-notes \
