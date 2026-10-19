@@ -24,6 +24,20 @@ Run `src/firewalk` as root. See `man/firewalk.8` for usage.
 - Capture retries on `EINTR` and re-arms `select()` each loop; fixed a fallthrough from ICMP into TCP response verification.
 - Dropped the obsolete Debian `libdumbnet` patch.
 
+## CI and releases
+
+`.github/workflows/ci.yml` builds, runs `make distcheck`, and packages a `.deb`
+in a Debian stable container on every push to `master` and on pull requests.
+
+`.github/workflows/release.yml` runs on any `v*` tag, collects the source
+tarball, `.deb`, debug symbols, `.buildinfo`, `.changes`, and `SHA256SUMS`, then
+publishes them as a GitHub Release. To cut one, bump `VERSION`, `AC_INIT` in
+`configure.ac`, and `debian/changelog`, then tag and push:
+
+```sh
+git tag -a v5.0.2 -m "Firewalk 5.0.2" && git push origin v5.0.2
+```
+
 <br>
 <br>
 
